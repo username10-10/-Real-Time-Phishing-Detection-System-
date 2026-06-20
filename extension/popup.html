@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Phishing Detector</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 16px;
+      width: 350px;
+      font-family: Arial, sans-serif;
+      background: #f4f7fb;
+      color: #1f2937;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 18px;
+      padding: 18px;
+      box-shadow: 0 10px 28px rgba(15, 23, 42, 0.12);
+      border: 1px solid #e5e7eb;
+    }
+
+    .logo {
+      text-align: center;
+      margin-bottom: 16px;
+    }
+
+    .logo h2 {
+      margin: 0;
+      font-size: 23px;
+      color: #0f172a;
+    }
+
+    .logo p {
+      margin: 6px 0 0;
+      font-size: 12px;
+      color: #64748b;
+    }
+
+    .hidden { display: none; }
+
+    .section-title {
+      font-size: 16px;
+      font-weight: 800;
+      margin-bottom: 14px;
+      text-align: center;
+      color: #111827;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px 14px;
+      margin-bottom: 12px;
+      border: 1px solid #d1d5db;
+      border-radius: 12px;
+      font-size: 14px;
+      outline: none;
+      background: #fff;
+    }
+
+    input:focus {
+      border-color: #2563eb;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+    }
+
+    button {
+      width: 100%;
+      border: none;
+      border-radius: 12px;
+      padding: 12px;
+      margin-top: 10px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    .primary-btn {
+      background: #2563eb;
+      color: white;
+    }
+
+    .primary-btn:hover { background: #1d4ed8; }
+
+    .secondary-btn {
+      background: #e5e7eb;
+      color: #111827;
+    }
+
+    .secondary-btn:hover { background: #d1d5db; }
+
+    .success-btn {
+      background: #10b981;
+      color: white;
+    }
+
+    .success-btn:hover { background: #059669; }
+
+    .danger-btn {
+      background: #ef4444;
+      color: white;
+    }
+
+    .danger-btn:hover { background: #dc2626; }
+
+    .link-row {
+      margin-top: 16px;
+      padding: 12px;
+      background: #f8fafc;
+      border: 1px solid #e5e7eb;
+      border-radius: 14px;
+      text-align: center;
+    }
+
+    .link-btn {
+      display: block;
+      width: 100%;
+      background: transparent;
+      border: none;
+      color: #2563eb;
+      font-size: 13px;
+      font-weight: 700;
+      padding: 7px 0;
+      margin: 0;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: 0.2s ease;
+    }
+
+    .link-btn:hover {
+      background: #eff6ff;
+      text-decoration: none;
+    }
+
+    .link-divider {
+      height: 1px;
+      background: #e5e7eb;
+      margin: 6px 0;
+    }
+
+    .muted-link {
+      color: #64748b;
+      font-size: 12px;
+    }
+
+    .helper-text {
+      font-size: 12px;
+      color: #64748b;
+      margin: -4px 0 12px;
+      line-height: 1.5;
+    }
+
+    .policy-box {
+      font-size: 12px;
+      color: #475569;
+      background: #f8fafc;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 10px 12px;
+      margin-bottom: 12px;
+      line-height: 1.5;
+    }
+
+    .qr-box {
+      width: 100%;
+      min-height: 180px;
+      border: 1px dashed #cbd5e1;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #f8fafc;
+      color: #64748b;
+      font-size: 12px;
+      text-align: center;
+      padding: 12px;
+      margin-bottom: 12px;
+      line-height: 1.5;
+      overflow: hidden;
+    }
+
+    .qr-box canvas,
+    .qr-box img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      margin: 0 auto;
+    }
+
+    .secret-box {
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 10px 12px;
+      margin-bottom: 12px;
+      font-size: 12px;
+      color: #374151;
+      word-break: break-word;
+      line-height: 1.5;
+    }
+
+    .secret-label {
+      font-weight: 700;
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .secret-key {
+      font-family: Consolas, monospace;
+      letter-spacing: 1px;
+      font-size: 13px;
+      user-select: all;
+    }
+
+    .user-badge {
+      margin-bottom: 12px;
+      padding: 10px 12px;
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-radius: 12px;
+      font-size: 13px;
+      color: #1d4ed8;
+      text-align: center;
+      font-weight: 700;
+      word-break: break-word;
+    }
+
+    #status {
+      margin-top: 16px;
+      padding: 12px;
+      border-radius: 12px;
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      font-size: 12px;
+      white-space: pre-wrap;
+      word-break: break-word;
+      color: #374151;
+      min-height: 48px;
+      line-height: 1.45;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="card">
+    <div class="logo">
+      <h2>Phishing Detector</h2>
+      <p>Secure browsing assistant</p>
+    </div>
+
+    <div id="choiceSection">
+      <div class="section-title">Welcome</div>
+      <button id="showLoginBtn" class="primary-btn">Login</button>
+      <button id="showRegisterBtn" class="secondary-btn">Sign Up</button>
+    </div>
+
+    <div id="loginSection" class="hidden">
+      <div class="section-title">Login</div>
+      <input id="loginEmail" type="email" placeholder="Enter your email" />
+      <input id="loginPassword" type="password" placeholder="Enter your password" />
+      <button id="loginBtn" class="primary-btn">Login</button>
+
+      <div class="link-row">
+        <button id="forgotPasswordBtn" class="link-btn">Forgot password?</button>
+        <div class="link-divider"></div>
+        <button id="goToRegisterBtn" class="link-btn">New user? Create account</button>
+        <button id="backFromLoginBtn" class="link-btn muted-link">← Back</button>
+      </div>
+    </div>
+
+    <div id="registerSection" class="hidden">
+      <div class="section-title">Create Account</div>
+      <input id="registerEmail" type="email" placeholder="Enter your email" />
+      <input id="registerPassword" type="password" placeholder="Create password" />
+
+      <div class="policy-box">
+        Password must contain:
+        <br>• At least 8 characters
+        <br>• At least 1 uppercase letter
+        <br>• At least 1 lowercase letter
+        <br>• At least 1 number
+        <br>• At least 1 special character
+      </div>
+
+      <input id="registerConfirmPassword" type="password" placeholder="Confirm password" />
+      <button id="registerBtn" class="primary-btn">Create Account</button>
+
+      <div class="link-row">
+        <button id="goToLoginBtn" class="link-btn">Already have an account? Login</button>
+        <button id="backFromRegisterBtn" class="link-btn muted-link">← Back</button>
+      </div>
+    </div>
+
+    <div id="setup2faSection" class="hidden">
+      <div class="section-title">Set Up 2FA</div>
+      <div class="helper-text">
+        Scan the QR code using Microsoft Authenticator, or use the manual setup key below.
+      </div>
+
+      <div id="qrContainer" class="qr-box">QR code will appear here.</div>
+
+      <div class="secret-box">
+        <span class="secret-label">Manual setup key:</span>
+        <span id="secretKeyText" class="secret-key">Not generated yet</span>
+      </div>
+
+      <input id="setupOtpCode" type="text" maxlength="6" placeholder="Enter 6-digit code" />
+      <button id="activate2faBtn" class="primary-btn">Activate 2FA</button>
+
+      <div class="link-row">
+        <button id="cancelSetup2faBtn" class="link-btn muted-link">← Cancel</button>
+      </div>
+    </div>
+
+    <div id="verifyOtpSection" class="hidden">
+      <div class="section-title">Two-Factor Verification</div>
+      <div class="helper-text">
+        Enter the 6-digit code from Microsoft Authenticator to continue login.
+      </div>
+
+      <input id="verifyOtpCode" type="text" maxlength="6" placeholder="Enter 6-digit code" />
+      <button id="verifyOtpBtn" class="primary-btn">Verify Code</button>
+
+      <div class="link-row">
+        <button id="backFromOtpBtn" class="link-btn muted-link">← Back</button>
+      </div>
+    </div>
+
+    <div id="appSection" class="hidden">
+      <div id="userBadge" class="user-badge">Logged in</div>
+
+      <button id="saveSafeBtn" class="success-btn">Mark Current as Safe</button>
+      <button id="openDashboardBtn" class="secondary-btn">Open Dashboard</button>
+      <button id="logoutBtn" class="danger-btn">Logout</button>
+    </div>
+
+    <div id="status">Not logged in.</div>
+  </div>
+
+  <script src="qrcode.min.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

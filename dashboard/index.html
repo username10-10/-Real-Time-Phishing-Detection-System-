@@ -1,0 +1,155 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Phishing Dashboard</title>
+
+  <link rel="stylesheet" href="/dashboard/style.css?v=6" />
+</head>
+<body>
+  <!-- HEADER -->
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <div class="kicker">DASHBOARD</div>
+        <h1>Phishing Dashboard</h1>
+        <div class="sub">Real-time URL detection • RF + CNN Fusion • SHAP XAI</div>
+      </div>
+
+      <div class="top-actions">
+        <div class="userbox" title="Session">
+          <div id="avatar" class="avatar">?</div>
+          <div class="usertext">
+            <div id="userLine" class="userline">Not logged in</div>
+            <div id="userSub" class="usersub">Open dashboard from extension</div>
+          </div>
+        </div>
+
+        <button id="btnRefresh" class="btn btn-primary">Refresh</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN -->
+  <main class="wrap">
+    <section class="grid kpis">
+      <div class="card kpi">
+        <div class="kpi-title">Total Events</div>
+        <div class="kpi-value" id="kpiTotal">0</div>
+        <div class="kpi-sub" id="kpiLast">Last refresh: -</div>
+      </div>
+
+      <div class="card kpi">
+        <div class="kpi-title">Blocked</div>
+        <div class="kpi-value danger" id="kpiBlocked">0</div>
+        <div class="kpi-sub">High confidence threats</div>
+      </div>
+
+      <div class="card kpi">
+        <div class="kpi-title">Warned</div>
+        <div class="kpi-value warn" id="kpiWarned">0</div>
+        <div class="kpi-sub">Medium risk alerts</div>
+      </div>
+
+      <div class="card kpi">
+        <div class="kpi-title">Safe</div>
+        <div class="kpi-value ok" id="kpiSafe">0</div>
+        <div class="kpi-sub">Allowed navigation</div>
+      </div>
+    </section>
+
+    <section class="card status-card">
+      <div class="status-head">
+        <h2>System Status</h2>
+        <div class="muted">Latest operation logs</div>
+      </div>
+      <div id="status" class="status">Waiting for token session…</div>
+    </section>
+
+    <section class="card">
+      <div class="card-head">
+        <h2>Incidents</h2>
+        <div class="muted">Recent detections (click Explain to view XAI)</div>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th style="width:180px;">Time</th>
+              <th>Domain</th>
+              <th style="width:95px;">Action</th>
+              <th style="width:120px;">Final Score</th>
+              <th>Reason</th>
+              <th style="width:95px;">XAI</th>
+            </tr>
+          </thead>
+          <tbody id="histBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="grid two">
+      <div class="card">
+        <div class="card-head">
+          <h2>Feedback Lists</h2>
+          <div class="muted">User-marked safe/phishing domains</div>
+        </div>
+
+        <div class="lists">
+          <div>
+            <div class="list-title">Safe Domains</div>
+            <ul id="safeList" class="list"></ul>
+          </div>
+        </div>
+
+        <div class="row">
+          <button id="btnLoadLists" class="btn">Load My Lists</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <h2>XAI Explanation</h2>
+          <div class="muted">User-friendly explanation for selected incident</div>
+        </div>
+
+        <div id="xaiUrl" class="mono"></div>
+        <div id="xaiSummary" class="xai-summary"></div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th style="width:34%;">URL pattern that influenced the result</th>
+                <th style="width:22%;">Impact on decision</th>
+                <th>Simple explanation</th>
+              </tr>
+            </thead>
+            <tbody id="xaiBody"></tbody>
+          </table>
+        </div>
+
+        <div id="xaiTips" class="muted" style="margin-top:10px;"></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-left">
+        <div class="footer-title">Real-time Phishing URL Detection Dashboard</div>
+        <div class="footer-sub">RF + CNN Fusion • SHAP Explainability • FastAPI + Chrome Extension</div>
+      </div>
+
+      <div class="footer-right">
+        <span class="muted">© FYP</span>
+      </div>
+    </div>
+  </footer>
+
+  <script defer src="/dashboard/app.js?v=6"></script>
+</body>
+</html>

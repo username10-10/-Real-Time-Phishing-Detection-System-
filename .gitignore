@@ -1,0 +1,45 @@
+# Virtual environment
+venv/
+.venv/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Firebase / secrets
+.env
+.env.local
+backend/.env
+backend/firebase_service_account.json
+serviceAccountKey.json
+firebase-adminsdk*.json
+*.pem
+*.key
+
+# Firebase config - users must use their own Firebase API
+dashboard/firebase-config.js
+dashboard/firebase_config.js
+extension/firebase-config.js
+extension/firebase_config.js
+
+# Raw datasets
+data/raw/
+*.csv
+
+# Large model file - do not upload to GitHub
+model/rf_model.pkl
+
+# Local generated files
+model/history_store.json
+model/feedback_store.json
+model/user_allowlist.json
+model/allowlist.txt
+
+# IDE
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db

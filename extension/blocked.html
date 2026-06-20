@@ -1,0 +1,239 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Blocked - Phishing Detector</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Arial, sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(239, 68, 68, 0.18), transparent 35%),
+        radial-gradient(circle at bottom right, rgba(37, 99, 235, 0.12), transparent 35%),
+        #0f172a;
+      color: #e5e7eb;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 28px;
+    }
+
+    .box {
+      width: 100%;
+      max-width: 820px;
+      background: rgba(15, 23, 42, 0.92);
+      border: 1px solid rgba(248, 113, 113, 0.35);
+      border-radius: 24px;
+      padding: 32px;
+      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
+    }
+
+    .icon {
+      width: 72px;
+      height: 72px;
+      border-radius: 20px;
+      background: rgba(239, 68, 68, 0.16);
+      border: 1px solid rgba(248, 113, 113, 0.35);
+      display: grid;
+      place-items: center;
+      font-size: 38px;
+      margin-bottom: 18px;
+    }
+
+    .kicker {
+      color: #fca5a5;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 34px;
+      line-height: 1.15;
+      color: #ffffff;
+    }
+
+    .subtitle {
+      margin-top: 12px;
+      color: #cbd5e1;
+      line-height: 1.6;
+      font-size: 15px;
+    }
+
+    .details {
+      margin-top: 24px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .detail-card {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 14px 16px;
+    }
+
+    .label {
+      font-size: 12px;
+      color: #94a3b8;
+      font-weight: 700;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .value {
+      color: #e5e7eb;
+      font-size: 14px;
+      word-break: break-all;
+      line-height: 1.5;
+    }
+
+    .risk-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .score {
+      font-size: 24px;
+      font-weight: 900;
+      color: #fca5a5;
+    }
+
+    .type {
+      display: inline-flex;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: rgba(239, 68, 68, 0.16);
+      border: 1px solid rgba(248, 113, 113, 0.35);
+      color: #fecaca;
+      font-weight: 800;
+      text-transform: uppercase;
+      font-size: 12px;
+    }
+
+    .advice {
+      margin-top: 24px;
+      background: rgba(59, 130, 246, 0.10);
+      border: 1px solid rgba(96, 165, 250, 0.22);
+      border-radius: 16px;
+      padding: 16px;
+      color: #dbeafe;
+      line-height: 1.6;
+      font-size: 14px;
+    }
+
+    .advice b { color: #ffffff; }
+
+    .actions {
+      display: flex;
+      gap: 12px;
+      margin-top: 24px;
+      flex-wrap: wrap;
+    }
+
+    button {
+      border: none;
+      border-radius: 14px;
+      padding: 12px 18px;
+      font-size: 14px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    .primary {
+      background: #2563eb;
+      color: white;
+    }
+
+    .primary:hover {
+      background: #1d4ed8;
+      transform: translateY(-1px);
+    }
+
+    .secondary {
+      background: rgba(255, 255, 255, 0.08);
+      color: #e5e7eb;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .secondary:hover {
+      background: rgba(255, 255, 255, 0.13);
+      transform: translateY(-1px);
+    }
+
+    .footer-note {
+      margin-top: 18px;
+      font-size: 12px;
+      color: #94a3b8;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 680px) {
+      .box { padding: 24px; }
+      h1 { font-size: 28px; }
+      .risk-row { grid-template-columns: 1fr; }
+      .actions { flex-direction: column; }
+      button { width: 100%; }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="box">
+    <div class="icon">🛡️</div>
+    <div class="kicker">Access Blocked</div>
+    <h1>Potential phishing website detected</h1>
+
+    <p class="subtitle">
+      Phishing Detector stopped this page because the URL matched high-risk indicators.
+      Do not enter your username, password, banking details, OTP, or personal information on this site.
+    </p>
+
+    <section class="details">
+      <div class="detail-card">
+        <div class="label">Blocked URL</div>
+        <div class="value" id="u">Loading...</div>
+      </div>
+
+      <div class="risk-row">
+        <div class="detail-card">
+          <div class="label">Predicted Type</div>
+          <div class="value"><span class="type" id="t">Unknown</span></div>
+        </div>
+
+        <div class="detail-card">
+          <div class="label">Risk Score</div>
+          <div class="score" id="s">N/A</div>
+        </div>
+      </div>
+    </section>
+
+    <div class="advice">
+      <b>Recommended action:</b>
+      Go back to the previous page. If this is a trusted website, verify the address manually
+      and open it from an official source instead of using unknown links.
+    </div>
+
+    <div class="actions">
+      <button id="back" class="primary">Go Back</button>
+      <button id="closeTab" class="secondary">Close This Tab</button>
+      <button id="copyUrl" class="secondary">Copy URL</button>
+    </div>
+
+    <div class="footer-note">
+      This blocking page is generated by the Phishing Detector extension using the RF + CNN fusion detection policy.
+    </div>
+  </main>
+
+  <script src="blocked.js"></script>
+</body>
+</html>
